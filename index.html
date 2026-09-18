@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FAF8F4">
+  <meta name="description" content="你读的东西，都卡在哪一段？8 道题测出你的知识消化系统卡在哪一段，以及该从哪儿修。">
+  <title>测测你的「知识消化系统」</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="vendor/pico.min.css">
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+
+  <!-- 顶栏 -->
+  <header class="site-header">
+    <div class="shell header-inner">
+      <img class="header-logo" src="assets/logo.svg" alt="" aria-hidden="true">
+      <span class="header-brand" id="headerBrand">示例品牌</span>
+    </div>
+  </header>
+
+  <main class="shell">
+
+    <!-- 示例占位提醒条（真实内容接入后会自动消失） -->
+    <div class="sample-banner" id="sampleBanner">
+      <span class="sample-dot"></span>
+      当前是【示例内容】，仅用于体验模板流程。正式内容接入后本条会自动移除。
+    </div>
+
+    <!-- ============ 第 1 屏：开场 ============ -->
+    <section class="screen card" id="screenIntro">
+      <div class="intro-top">
+        <div class="eyebrow">测评</div>
+        <h1 id="introTitle" class="intro-title">心流启动方式测评</h1>
+        <p id="introSubtitle" class="intro-subtitle">找到最适合你的「进入状态」路径</p>
+      </div>
+
+      <p id="introText" class="intro-text"></p>
+
+      <ul class="meta-list">
+        <li><span class="meta-ico">◔</span><span id="metaDuration">约 90 秒</span></li>
+        <li><span class="meta-ico">☰</span><span id="metaCount">8 道单选题</span></li>
+      </ul>
+
+      <div class="audience hidden" id="audienceBox">
+        <div class="audience-label">适合谁来测</div>
+        <p class="audience-text" id="audienceText"></p>
+      </div>
+
+      <button type="button" class="btn btn-primary btn-block" id="btnStart">开始测试</button>
+      <button type="button" class="btn btn-ghost btn-block hidden" id="btnResume">继续上次未完成的测试</button>
+    </section>
+
+    <!-- ============ 第 2 屏：答题 ============ -->
+    <section class="screen card hidden" id="screenQuiz" aria-live="polite">
+      <div class="progress-head">
+        <span class="progress-label" id="progressLabel">第 1 / 5 题</span>
+        <button type="button" class="link-btn" id="btnRestartInline">重新开始</button>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+      <h2 class="q-title" id="qTitle"></h2>
+      <div class="options" id="options" role="radiogroup" aria-labelledby="qTitle"></div>
+
+      <div class="quiz-nav">
+        <button type="button" class="btn btn-secondary" id="btnPrev">上一题</button>
+        <button type="button" class="btn btn-primary" id="btnNext">下一题</button>
+      </div>
+      <p class="hint" id="nextHint">选择一个选项后继续</p>
+    </section>
+
+    <!-- ============ 过渡：计算中 ============ -->
+    <section class="screen hidden" id="screenCalc" aria-live="polite">
+      <div class="card calc-card">
+        <div class="spinner"></div>
+        <p class="calc-text" id="calcText">正在给你的知识做一次体检…</p>
+      </div>
+    </section>
+
+    <!-- ============ 第 3 屏：结果 ============ -->
+    <section class="screen hidden" id="screenResult">
+      <div class="card result-card">
+        <div class="result-badge" id="resultBadge">你的结果</div>
+        <h2 class="result-name" id="resultName"></h2>
+        <p class="result-tagline" id="resultTagline"></p>
+
+        <!-- 消化管道图：标出卡住的位置（最值得截屏的一块） -->
+        <div class="pipe-wrap">
+          <div class="pipe" id="pipe"></div>
+          <div class="pipe-note" id="pipeNote"></div>
+        </div>
+
+        <!-- 你卡在哪一段 -->
+        <div class="stuck-box">
+          <div class="stuck-head">你卡在</div>
+          <div class="stuck-label" id="stuckLabel"></div>
+          <p class="stuck-desc" id="stuckDesc"></p>
+        </div>
+
+        <div class="score-strip hidden" id="scoreStrip"></div>
+
+        <div class="result-section">
+          <h3 class="sec-title">解读</h3>
+          <div id="resultSummary"></div>
+        </div>
+
+        <!-- 带走一句 -->
+        <div class="takeaway" id="takeawayBox">
+          <div class="takeaway-label">带走一句</div>
+          <p class="takeaway-text" id="takeawayText"></p>
+        </div>
+
+        <!-- 影子类型（可关闭） -->
+        <div class="shadow-box hidden" id="shadowBox">
+          <div class="shadow-label">影子类型</div>
+          <p class="shadow-text" id="shadowText"></p>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block" id="btnPoster">
+          生成分享图片
+        </button>
+
+        <!-- 后续引导（未配置时隐藏） -->
+        <div class="followup hidden" id="followUp">
+          <h3 class="sec-title" id="fuTitle"></h3>
+          <p class="fu-desc" id="fuDesc"></p>
+          <div class="fu-body" id="fuBody"></div>
+        </div>
+      </div>
+
+      <div class="result-foot">
+        <button type="button" class="btn btn-secondary btn-block" id="btnRetest">重新测一次</button>
+        <p class="hint" id="reviewHint"></p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell">
+      <p id="footerText">示例品牌</p>
+    </div>
+  </footer>
+
+  <!-- ============ 分享图片弹层 ============ -->
+  <div class="modal hidden" id="posterModal" role="dialog" aria-modal="true" aria-labelledby="posterModalTitle">
+    <div class="modal-mask" id="posterMask"></div>
+    <div class="modal-panel">
+      <div class="modal-head">
+        <span id="posterModalTitle">分享图片</span>
+        <button type="button" class="modal-close" id="posterClose" aria-label="关闭">×</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- 生成中 -->
+        <div class="poster-loading" id="posterLoading">
+          <div class="spinner"></div>
+          <p class="loading-text" id="loadingText">正在生成图片…</p>
+        </div>
+
+        <!-- 失败 -->
+        <div class="poster-error hidden" id="posterError">
+          <p class="err-text" id="errText">图片生成失败了</p>
+          <button type="button" class="btn btn-primary" id="btnRetry">重试</button>
+        </div>
+
+        <!-- 成功 -->
+        <div class="poster-done hidden" id="posterDone">
+          <div class="poster-preview-wrap">
+            <img id="posterImg" class="poster-img" alt="测评结果分享图">
+          </div>
+          <p class="save-tip">手机上长按图片即可保存到相册</p>
+
+          <div class="poster-actions">
+            <button type="button" class="btn btn-primary" id="btnDownload">下载图片</button>
+            <button type="button" class="btn btn-secondary hidden" id="btnShare">分享图片</button>
+          </div>
+
+          <div class="copy-block">
+            <div class="copy-head">
+              <span>邀请文案</span>
+              <button type="button" class="copy-btn" id="btnCopy">复制文案</button>
+            </div>
+            <textarea class="copy-box" id="copyBox" readonly rows="4"></textarea>
+            <p class="copy-tip hidden" id="copyTip">复制失败了，请手动选中上面的文字复制</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast hidden" id="toast"></div>
+
+  <!-- 二维码生成用的隐藏容器 -->
+  <div id="qrHolder" class="qr-holder"></div>
+
+  <script src="vendor/qrcode.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/poster.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
