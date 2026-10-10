@@ -42,8 +42,8 @@ const QUIZ_CONFIG = {
 
     durationText: "约 90 秒",
     questionCountText: "8 道单选题",
-    brandName: "瑜伽课后",
-    signature: "播客《瑜伽课后》 · Joyce",
+    brandName: "发声,Taste,Out Loud",
+    signature: "播客发声,Taste,Out Loud · Joyce",
 
     // 答完最后一题时的过渡文案
     transitionText: "正在给你的知识做一次体检…",
@@ -288,7 +288,7 @@ const QUIZ_CONFIG = {
     enabled: true,
     title: "要不要聊 15 分钟？",
     desc:
-      "我是 Joyce，播客《瑜伽课后》的主播。\n" +
+      "我是 Joyce，播客发声,Taste,Out Loud 的主播。\n" +
       "我不教你更多知识——你读得已经够多了。我做的是帮你把已经读过的东西，变成你自己的判断和表达。\n\n" +
       "如果你愿意，加我微信聊 15 分钟。不用准备什么，就带着你刚才的结果来。\n" +
       "我们一起看看：你的输入输出系统具体断在哪一段，以及该先从哪一段修起。",
@@ -302,7 +302,7 @@ const QUIZ_CONFIG = {
     secondaryTitle: "还没准备好聊？先做两件事",
     secondary: [
       {
-        label: "进《瑜伽课后》听友群，拿一份播客衍生品资料",
+        label: "进发声,Taste,Out Loud 听友群，拿一份播客衍生品资料",
         // 没有链接的入口用「复制」：把关键信息放进剪贴板，用户粘贴即可
         note: "微信号 LeedsLee2010，备注「听友群」",
         copy: "LeedsLee2010",
